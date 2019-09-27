@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Nuevo" icon="ui-icon-disk"
+						  action="#{canchaController.newCancha()}"
+						  ajax="false"/>
+						
+						 <p:commandButton value="Editar" icon="ui-icon-disk"
+						  action="#{canchaController.editCancha()}"
+						  ajax="false"/>
+						  <p:commandButton value="Eliminar" icon="ui-icon-trash"
+						  action="#{canchaController.deleteCancha()}"
+						  ajax="false"/>
+
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGriBuscador" columns="3" style="width:100%">
+					<p:outputLabel value="Buscar Por Nombre:" for="txtSearchName" />
+					<p:inputText id="txtSearchName"  value="#{canchaController.filterName}" />
+					<p:commandButton icon="ui-icon-search" 
+					  actionListener="#{canchaController.searchCanchaByName}"
+					  update=":frm:datTabCanchas :frm:men"/>
+					  
+					  
+					  
+					  <p:outputLabel value="Buscar Por Sede:" for="cboSearchSede" />
+					<p:selectOneMenu id="cboSearchSede" effect="drop"
+						value="#{canchaController.sedebuscar}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{canchaController.sedes}"
+							var="sede" itemLabel="#{sede.NSede}"
+							itemValue="#{CSede}" />
+					</p:selectOneMenu>	
+				<p:commandButton icon="ui-icon-search" 
+					  actionListener="#{canchaController.searchCanchaBySede}"
+					  update=":frm:datTabCanchas :frm:men"/>
+				</p:panelGrid>
+
+				<p:dataTable id="datTabCanchas"
+					emptyMessage="No existen canchas registrados"
+					value="#{canchaController.canchas}" var="cancha"
+					
+					rowKey="#{cancha.CCancha}"
+					selectionMode="single"
+					selection="#{canchaController.canchaSelect}"
+					
+					paginator="true" rows="10">
+					
+					
+					<p:ajax event="rowSelect"
+						listener="#{canchaController.selectCancha}" />
+					
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{cancha.CCancha}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<p:outputLabel value="#{cancha.NCancha}" />
+					</p:column>
+					<p:column headerText="Sede">
+						<p:outputLabel value="#{cancha.sede.NSede}" />
+					</p:column>
+					<p:column headerText="Tipo Cancha">
+						<p:outputLabel value="#{cancha.tipocancha.NTipoCancha}" />
+					</p:column>
+					<p:column headerText="Precio Por Hora">
+						<p:outputLabel value="#{cancha.tipocancha.SPrecioHora}" />
+					</p:column>
+					<p:column headerText="Kit">
+						<p:outputLabel value="#{cancha.tipocancha.kit.TDescripcion}" />
+					</p:column>
+					
+				</p:dataTable>
+
+				
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

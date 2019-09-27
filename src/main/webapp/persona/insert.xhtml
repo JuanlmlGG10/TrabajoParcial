@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Guardar" icon="ui-icon-disk" 
+						onclick="PF('dlg3').show();" action="#{personaController.savePersona()}" ajax="false"/>
+<p:dialog header="En hora buena" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="100">
+   						 <h:outputText value="Registro Exitoso" />
+							</p:dialog>
+
+						<p:commandButton value="Regresar" icon="ui-icon-disk"
+						  action="#{personaController.listPersonas()}"
+						  immediate="true"
+						  ajax="false"/>
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGridPersona" columns="2" style="width:100%">
+					
+						<p:outputLabel value="Nombre:" for="txtName" />
+					<p:inputText id="txtName" required="true" maxlength="45"
+						value="#{personaController.persona.NPersona}" />
+					
+						<p:outputLabel value="Apellido:" for="txtApellido" />
+					<p:inputText id="txtApellido" required="true" maxlength="45"
+						value="#{personaController.persona.NApellido}" />
+						
+						
+						<p:outputLabel value="DNI:" for="txtDni" />
+					<p:inputText id="txtDni" required="true" maxlength="8"  type="number"
+						value="#{personaController.persona.NDni}" pattern="[-+]?[0-9]" >
+						<f:validateLength minimum="8" ></f:validateLength> 
+						</p:inputText>
+						
+					<p:outputLabel value="Distrito: " for="cboDistrito" />
+					
+					
+					
+					
+					<p:selectOneMenu id="cboDistrito" required="true" effect="drop"
+						value="#{personaController.distrito}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{personaController.distritos}"
+							var="distrito" itemLabel="#{distrito.NDistrito}"
+							itemValue="#{distrito}" />
+					</p:selectOneMenu>
+					
+							
+					<p:outputLabel value="NCelular" for="txtNCelular" />
+					<p:inputText id="txtNCelular" required="true" maxlength="9" type="number"
+						value="#{personaController.persona.NCelular}" >
+						<f:validateLength minimum="9" ></f:validateLength> 
+						</p:inputText>
+						<p:outputLabel value="Email:" for="txtEmail" />
+					<p:inputText id="txtEmail" required="true" maxlength="45"
+						value="#{personaController.persona.TEmail}" requiredMessage="Please enter your email address."
+		validatorMessage="Formato invalido de email">
+						<f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
+					
+						<p:outputLabel value="Usuario:" for="txtUsuario" />
+					<p:inputText id="txtUsuario" required="true" maxlength="45"
+						value="#{personaController.persona.NUsuario}" />
+					
+						<p:outputLabel value="Contraseña:" for="txtContra" />
+					<p:password id="txtContra" required="true" maxlength="45" feedback="true" inline="true"
+						value="#{personaController.persona.NContraseña}" />
+					
+					<p:outputLabel value="TipoUsuario: " for="cboTipoUsuario"  />
+        <p:selectOneMenu id="cboTipoUsuario" value="#{personaController.persona.tipousuario}" style="width:125px">
+            <f:selectItem itemLabel="Select One" itemValue="" />
+            <f:selectItem itemLabel="admin" itemValue="admin" />
+            <f:selectItem itemLabel="cliente" itemValue="cliente" />
+        </p:selectOneMenu>
+				</p:panelGrid>
+				<br></br>
+
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

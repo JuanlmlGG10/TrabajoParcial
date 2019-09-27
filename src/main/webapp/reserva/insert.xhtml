@@ -1,0 +1,91 @@
+					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Guardar" icon="ui-icon-disk" 
+						action="#{reservaController.saveReserva()}" ajax="false"/>
+
+						<p:commandButton value="Regresar" icon="ui-icon-disk"
+						  action="#{reservaController.listReserva()}"
+						  immediate="true"
+						  ajax="false"/>
+					</f:facet>
+				</p:toolbar>
+			
+
+				<p:panelGrid id="panGridReservat" columns="2" style="width:100%">
+					
+					
+					<p:outputLabel value="Cancha" for="cboCancha" />
+					<p:selectOneMenu id="cboCancha" required="true" effect="drop"
+						value="#{reservaController.cancha}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{reservaController.canchas}"
+							var="cancha" itemLabel="#{cancha.NCancha}"
+							itemValue="#{cancha}" />
+							
+					</p:selectOneMenu>	
+					
+					<p:outputLabel value="Persona" for="cboPersona" />
+					<p:selectOneMenu id="cboPersona" required="true" effect="drop"
+						value="#{reservaController.reserva.persona}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{reservaController.personas}"
+							var="persona" itemLabel="#{persona.NPersona}"
+							itemValue="#{reserva.persona}" />
+					</p:selectOneMenu>
+
+						
+						<p:outputLabel value="Fecha:" for="txtFecha" />
+					<p:calendar id="txtFecha" required="true" maxlength="45"
+						value="#{reservaController.reserva.DFecha}" />
+						
+						<p:outputLabel value="Hora Inicio:" for="txtHorainicio" />
+					<p:calendar id="txtHorainicio" required="true" maxlength="45" pattern="HH" timeOnly="true" 
+						value="#{reservaController.reserva.DHoraInicio}"  />
+						
+				<p:outputLabel value="Hora de fin:" for="txtHoraDeFin" />
+					<p:calendar id="txtHoraDeFin" required="true" pattern="HH" timeOnly="true"
+						value="#{reservaController.reserva.DHoraFin}" />
+					
+					<p:outputLabel value="Monto:" for="txtMonto" />
+					<p:inputText id="txtMonto"  maxlength="45"  readonly="true"
+						value="#{reservaController.reserva.SMonto}" />
+						
+						  
+       <p:outputLabel for="fecharegistro" value="Fecha de Registro:" />
+        <p:calendar id="fecharegistro" value="#{reservaController.reserva.DFechaRegistro}" required="true"/>
+         
+						<p:outputLabel value="Comentario:" for="txtComentario" />
+					<p:inputText id="txtComentario" required="true" maxlength="45"
+						value="#{reservaController.reserva.TComentario}" />
+					
+					
+				</p:panelGrid>
+				<br></br>
+
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

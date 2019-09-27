@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Nuevo" icon="ui-icon-disk"
+						  action="#{sedeController.newSedes()}"
+						  ajax="false"/>
+						
+						 <p:commandButton value="Editar" icon="ui-icon-disk"
+						  action="#{sedeController.editSede()}"
+						  ajax="false"/>
+						  <p:commandButton value="Eliminar" icon="ui-icon-trash"
+						  action="#{sedeController.deleteSede()}"
+						  ajax="false"/>
+						
+
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGriBuscador" columns="3" style="width:100%">
+					<p:outputLabel value="Buscar Por Nombre:" for="txtSearchName" />
+					<p:inputText id="txtSearchName"  value="#{sedeController.filterName}" />
+					<p:commandButton icon="ui-icon-search" 
+					  actionListener="#{sedeController.searchSedeByName}"
+					  update=":frm:datTabsede :frm:men"/>
+					  
+					  
+					  
+					  <p:outputLabel value="Buscar Por Distrito:" for="cboSearchDistrito" />
+					<p:selectOneMenu id="cboSearchDistrito" effect="drop"
+						value="#{sedeController.distritobuscar}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{sedeController.distritos}"
+							var="distrito" itemLabel="#{distrito.NDistrito}"
+							itemValue="#{CDistrito}" />
+					</p:selectOneMenu>	
+				<p:commandButton icon="ui-icon-search" 
+					  actionListener="#{sedeController.searchSedeByDistrito}"
+					  update=":frm:datTabsede :frm:men"/>
+					  
+					  
+				</p:panelGrid>
+
+				<p:dataTable id="datTabsede"
+					emptyMessage="No existen sedes registradas"
+					value="#{sedeController.sedes}" var="sede"
+					
+					rowKey="#{sede.CSede}"
+					selectionMode="single"
+					selection="#{sedeController.sedeSelect}"
+					
+					paginator="true" rows="10">
+					
+					
+					<p:ajax event="rowSelect"
+						listener="#{sedeController.selectSede}" />
+					
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{sede.CSede}" />
+					</p:column>
+					<p:column headerText="Sede">
+						<p:outputLabel value="#{sede.NSede}" />
+					</p:column>
+					<p:column headerText="Dirección">
+						<p:outputLabel value="#{sede.TDireccion}" />
+					</p:column>
+					<p:column headerText="Distrito">
+						<p:outputLabel value="#{sede.distrito.NDistrito}" />
+					</p:column>
+					
+				</p:dataTable>
+
+				
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

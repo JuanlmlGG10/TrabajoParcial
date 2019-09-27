@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Guardar" icon="ui-icon-disk" 
+						onclick="PF('dlg3').show();" action="#{canchaController.saveCancha()}" ajax="false"  />
+					<p:dialog header="En hora buena" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="100">
+   						 <h:outputText value="Registro Exitoso" />
+							</p:dialog>
+						<p:commandButton value="Regresar" icon="ui-icon-disk"
+						  action="#{canchaController.listCancha()}"
+						  immediate="true"
+						  ajax="false"/>
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGridCancha" columns="2" style="width:100%">
+					<p:outputLabel value="Cancha:" for="txtName" />
+					<p:inputText id="txtName" required="true" maxlength="45"
+						value="#{canchaController.cancha.NCancha}" />
+						
+						
+					<p:outputLabel value="Sede" for="cboSede" />
+					<p:selectOneMenu id="cboSede" required="true" effect="drop"
+						value="#{canchaController.sede}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{canchaController.sedes}"
+							var="sede" itemLabel="#{sede.NSede}"
+							itemValue="#{sede}" />
+					</p:selectOneMenu>	
+					
+					<p:outputLabel value="TipoCancha" for="cboTipoCancha" />
+					<p:selectOneMenu id="cboTipoCancha" required="true" effect="drop"
+						value="#{canchaController.tipoCancha}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{canchaController.tipoCanchas}"
+							var="tipocancha" itemLabel="#{tipocancha.NTipoCancha}"
+							itemValue="#{tipocancha}" />
+					</p:selectOneMenu>	
+					
+				
+				</p:panelGrid>
+				<br></br>
+
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

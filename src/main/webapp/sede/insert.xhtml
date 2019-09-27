@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Guardar" icon="ui-icon-disk" 
+						action="#{sedeController.saveSede()}" ajax="false"/>
+
+						<p:commandButton value="Regresar" icon="ui-icon-disk"
+						  action="#{sedeController.listSedes()}"
+						  immediate="true"
+						  ajax="false"/>
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGridSede" columns="2" style="width:100%">
+					
+						<p:outputLabel value="Nombre:" for="txtNombre" />
+					<p:inputText id="txtNombre" required="true" maxlength="45"
+						value="#{sedeController.sede.NSede}" />
+					
+						<p:outputLabel value="Direccion:" for="txtDireccion" />
+					<p:inputText id="txtDireccion" required="true" maxlength="45"
+						value="#{sedeController.sede.TDireccion}" />
+					
+						
+					<p:outputLabel value="Distrito: " for="cboDistrito" />
+					<p:selectOneMenu id="cboDistrito" required="true" effect="drop"
+						value="#{sedeController.distrito}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{sedeController.distritos}"
+							var="distrito" itemLabel="#{distrito.NDistrito}"
+							itemValue="#{distrito}" />					
+							</p:selectOneMenu>
+					
+
+					
+					
+				</p:panelGrid>
+				<br></br>
+
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

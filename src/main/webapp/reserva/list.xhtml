@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Nuevo" icon="ui-icon-disk"
+						  action="#{reservaController.newReserva()}"
+						  ajax="false"/>
+						
+						 <p:commandButton value="Editar" icon="ui-icon-disk"
+						  action="#{reservaController.editReserva()}"
+						  ajax="false"/>
+						   <p:commandButton value="Eliminar" icon="ui-icon-trash"
+						  action="#{reservaController.deleteReserva()}"
+						  ajax="false"/>
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGriBuscador" columns="4" style="width:100%">
+
+					  
+					  <p:outputLabel value="Buscar Por fecha:" for="txtBuscarFechai" />
+					  <p:calendar id="txtBuscarFechai" maxlength="45"
+						value="#{reservaController.inicio}" />
+						<p:calendar id="txtBuscarFechaf" maxlength="45"
+						value="#{reservaController.fin}" />
+						<p:commandButton icon="ui-icon-search" 
+					  actionListener="#{reservaController.searchReservaByDate}"
+					  update=":frm:datTabReservas :frm:men"/>
+					  <p:outputLabel value="" />
+					  
+					   <p:outputLabel value="Buscar Por Tipo de Cancha:" for="cboTipoCancha" />
+					<p:selectOneMenu id="cboTipoCancha" effect="drop"
+						value="#{reservaController.tipocancha}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{canchaController.tipoCanchas}"
+							var="tipocancha" itemLabel="#{tipocancha.NTipoCancha}"
+							itemValue="#{CTipoCancha}" />
+					</p:selectOneMenu>	
+					
+					
+					<p:commandButton icon="ui-icon-search" 
+					  actionListener="#{reservaController.searchReservaByTipoCancha}"
+					  update=":frm:datTabReservas :frm:men"/>
+					
+						
+				</p:panelGrid>
+
+				<p:dataTable id="datTabReservas"
+					emptyMessage="No existen reservas registradas"
+					value="#{reservaController.reservas}" var="reserva"
+					
+					rowKey="#{reserva.CReserva}"
+					selectionMode="single"
+					selection="#{reservaController.reservaSelect}"
+					
+					paginator="true" rows="10">
+					
+					
+					<p:ajax event="rowSelect"
+						listener="#{reservaController.selectReserva}" />
+					
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{reserva.CReserva}" />
+					</p:column>
+					<p:column headerText="Sede">
+						<p:outputLabel value="#{reserva.cancha.sede.NSede}" />
+					</p:column>
+					<p:column headerText="Cancha">
+						<p:outputLabel value="#{reserva.cancha.NCancha}" />
+					</p:column>
+					<p:column headerText="Persona">
+						<p:outputLabel value="#{reserva.persona.NPersona}" />
+					</p:column>
+					<p:column headerText="Fecha">
+						<p:outputLabel value="#{reserva.DFecha}" >
+						 <f:convertDateTime pattern="MM-dd-yyyy" />
+						 </p:outputLabel>
+					</p:column>
+					<p:column headerText="Hora de Inicio">
+						<h:outputLabel value="#{reserva.DHoraInicio.getHours()}" pattern="HH" >
+							
+							</h:outputLabel>
+					</p:column>
+					
+					<p:column headerText="Hora de Fin">		
+						<p:outputLabel value="#{reserva.DHoraFin.getHours()}" pattern="HH"  >
+						
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Monto">
+						<p:outputLabel value="#{reserva.SMonto}" />
+					</p:column>
+					<p:column headerText="Fecha de registro">
+						<p:outputLabel value="#{reserva.DFechaRegistro}" pattern="dd-MM-yyyy" dateOnly="true"  >
+						 <f:convertDateTime pattern="MM-dd-yyyy" />
+						 </p:outputLabel>
+					</p:column>
+					<p:column headerText="Comentario">
+						<p:outputLabel value="#{reserva.TComentario}" />
+					</p:column>
+				</p:dataTable>
+
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

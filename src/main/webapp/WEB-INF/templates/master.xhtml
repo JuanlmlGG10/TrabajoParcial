@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="pageTitle">Reserva de canchas IPD</ui:insert></title>
+</h:head>
+
+<body>
+	<ui:insert name="header">
+		<h:form>
+			<p:menubar autoDisplay="false"  icon="/resources/demo/images/dock/stack.png" expanded="true" >
+    <p:menuitem value="Inicio" icon="/resources/demo/images/dock/reserva.png" url="/Inicio/insert.xhtml"/>
+    <p:menuitem value="Personas" icon="/resources/demo/images/dock/33750.png" url="/persona/list.xhtml"/>
+
+    <p:menuitem value="Sede" icon="/resources/demo/images/dock/sede.png" url="/sede/list.xhtml"/>
+
+    <p:menuitem value="Cancha" icon="/resources/demo/images/dock/cancha.png" url="/cancha/list.xhtml"/>
+
+    <p:menuitem value="Reserva" icon="/resources/demo/images/dock/reserva.png" url="/reserva/list.xhtml"/>
+    
+    </p:menubar>
+
+		</h:form>
+	</ui:insert>
+
+	<ui:insert name="content">
+
+	</ui:insert>
+
+
+	<ui:insert name="footer">
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+
+		<div>Copyright © hampcode, 2019. Todos los derechos reservados</div>
+	</ui:insert>
+</body>
+
+
+</html>
+
+
+
